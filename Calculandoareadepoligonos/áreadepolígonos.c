@@ -2,10 +2,27 @@
 #include <stdlib.h>
 #include <math.h>
 
+typedef struct {
+    double x;
+    double y;
+} Ponto;
+
+double calcularAreaTriangulo(Ponto a, Ponto b, Ponto c) {
+    double det = a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y);
+    return fabs(det / 2.0);
+}
+
+double calcularAreaPoligono(Ponto pontos[], int n) {
+    double areaTotal = 0.0;
+    for (int i = 1; i < n - 1; i++) {
+        areaTotal += calcularAreaTriangulo(pontos[0], pontos[i], pontos[i + 1]);
+    }
+    return areaTotal;
+}
 int main() {
     printf("Iniciando o programa\n");
 
-    FILE *file = fopen("./areaPoligono.txt", "r");
+    FILE *file = fopen("C:/Users/pedro/Desktop/Atividades/Calculandoareadepoligonos", "r");
     if (file == NULL) {
         perror("Falha ao tentar o arquivo");
         return 1;
@@ -41,23 +58,6 @@ int main() {
     fclose(file);
 
     printf("Programa Finalizando\n");
-    return 0;
+    return 0;
 }
 
-typedef struct {
-    double x;
-    double y;
-} Ponto;
-
-double calcularAreaTriangulo(Ponto a, Ponto b, Ponto c) {
-    double det = a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y);
-    return fabs(det / 2.0);
-}
-
-double calcularAreaPoligono(Ponto pontos[], int n) {
-    double areaTotal = 0.0;
-    for (int i = 1; i < n - 1; i++) {
-        areaTotal += calcularAreaTriangulo(pontos[0], pontos[i], pontos[i + 1]);
-    }
-    return areaTotal;
-}
